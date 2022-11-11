@@ -2,6 +2,7 @@ const { productsService } = require('../services');
 
 const STATUS_HTTP = {
   OK: 200,
+  CREATED: 201,
 };
 
 const getProducts = async (_req, res) => {
@@ -19,4 +20,11 @@ const getProductById = async (req, res) => {
   return res.status(STATUS_HTTP.OK).json(response.message);
 };
 
-module.exports = { getProducts, getProductById };
+const createProduct = async (req, res) => {
+  const { name } = req.body;
+  const { message } = await productsService.createNewProduct(name);
+
+  return res.status(STATUS_HTTP.CREATED).json(message);
+};
+
+module.exports = { getProducts, getProductById, createProduct };
