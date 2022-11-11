@@ -16,4 +16,6 @@ const productFound = {
 
 const error = { "message": "Product not found" };
 
-module.exports = { allProducts, productFound, error };
+const productToCreate = 'ProdutoX';
+
+module.exports = { allProducts, productFound, error, productToCreate };
