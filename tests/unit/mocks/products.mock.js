@@ -18,4 +18,15 @@ const error = { "message": "Product not found" };
 
 const productToCreate = 'ProdutoX';
 
-module.exports = { allProducts, productFound, error, productToCreate };
+const productCreated = {
+  "id": 4,
+  "name": "ProdutoX"
+};
+
+module.exports = {
+  allProducts,
+  productFound,
+  error,
+  productToCreate,
+  productCreated,
+};
