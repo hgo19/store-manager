@@ -7,6 +7,13 @@ const allProducts = [
     "id": 2,
     "name": "Traje de encolhimento"
   },
-]
+];
 
-module.exports = { allProducts };
+const productFound = {
+  "id": 1,
+  "name": "Martelo de Thor"
+};
+
+const error = { "message": "Product not found" };
+
+module.exports = { allProducts, productFound, error };

@@ -7,4 +7,12 @@ const findAll = async () => {
   return result;
 };
 
-module.exports = { findAll };
+const findById = async (productId) => {
+  const [[result]] = await connection.execute(`
+    SELECT * FROM products
+      WHERE id = ?`, [productId]);
+
+  return result;
+};
+
+module.exports = { findAll, findById };
