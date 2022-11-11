@@ -4,10 +4,12 @@ const { productsModel } = require('../../../src/models');
 const { productsService } = require('../../../src/services');
 
 
-const { allProducts } = require('./mocks/products.service.mocks');
+const { allProducts } = require('../mocks/products.mock');
 
 
 describe('Verifica o service de products', function () {
+  afterEach(Sinon.restore);
+
   it('Verifica se lista todos os produtos', async function () {
     Sinon.stub(productsModel, 'findAll').resolves(allProducts);
 
