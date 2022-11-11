@@ -1,7 +1,7 @@
 const { idSchema, newProduct } = require('./schemas');
 
 const validateId = (id) => {
-  const { error } = idSchema.validade(id);
+  const { error } = idSchema.validate(id);
 
   if (error) return { type: 'INVALID_VALUE', message: error.message };
 
