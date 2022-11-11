@@ -4,7 +4,7 @@ const { productsModel } = require('../../../src/models');
 const { productsService } = require('../../../src/services');
 
 
-const { allProducts } = require('../mocks/products.mock');
+const { allProducts, productFound, error } = require('../mocks/products.mock');
 
 
 describe('Verifica o service de products', function () {
@@ -19,5 +19,24 @@ describe('Verifica o service de products', function () {
     expect(response.message).to.be.a('array');
 
     expect(response.message).to.deep.equal(allProducts);
+  });
+
+  it('Verifica se retorna um erro caso nao ache o produto', async function () {
+    Sinon.stub(productsModel, 'findById').resolves(undefined);
+
+    const response = await productsService.getById(50);
+
+    expect(response).to.be.a('object');
+    expect(response.message).to.be.a('null');
+    expect(response.type).to.deep.equal(error.message);
+  });
+
+  it('Verifica se retorna um objeto com o produto pesquisado em caso de sucesso.', async function () {
+    Sinon.stub(productsModel, 'findById').resolves(productFound);
+
+    const response = await productsService.getById(1);
+
+    expect(response).to.be.a('object');
+    expect(response.message).to.deep.equal(productFound);
   });
 });
