@@ -10,6 +10,13 @@ const getProducts = async (_req, res) => {
   res.status(STATUS_HTTP.OK).json(message);
 };
 
-const getProductById = () => { };
+const getProductById = async (req, res) => {
+  const { id } = req.params;
+  const response = await productsService.getById(id);
+
+  if (response.type) return res.status(404).json({ message: response.type });
+
+  return res.status(STATUS_HTTP.OK).json(response.message);
+};
 
 module.exports = { getProducts, getProductById };
