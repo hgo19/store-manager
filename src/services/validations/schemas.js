@@ -8,7 +8,7 @@ const newProductSchema = Joi.object({
 
 const newSaleSchema = Joi.array().items(Joi.object({
   productId: Joi.number().required(),
-  quantity: Joi.number().integer().min(1),
+  quantity: Joi.number().min(1).required(),
 }));
 
 module.exports = { idSchema, newProductSchema, newSaleSchema };

@@ -13,7 +13,7 @@ const addNewSale = async (newSale) => {
   const checkProducts = await doesProductExist(newSale);
 
   if (checkProducts.some((product) => typeof product === 'undefined')) {
-    return { type: 'INVALID_INPUT', message: 'Product not found' };
+    return { type: 'not.found', message: 'Product not found' };
   }
 
   const response = await salesModel.insert(newSale);
@@ -27,18 +27,5 @@ const addNewSale = async (newSale) => {
 
   return { type: '', message: objectToReturn };
 };
-
-const salesExample = [
-  {
-    productId: 32,
-    quantity: 1,
-  },
-  {
-    productId: 32,
-    quantity: 5,
-  },
-];
-
-addNewSale(salesExample);
 
 module.exports = { addNewSale, doesProductExist };

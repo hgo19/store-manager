@@ -28,8 +28,6 @@ describe('Testa o módulo de sales service', function () {
 
     const response = await salesService.addNewSale(wrongSaleExample);
 
-    console.log('RESPONSE', response);
-
     expect(response).to.be.a('object');
     expect(response.message).to.be.equal('Product not found');
 
