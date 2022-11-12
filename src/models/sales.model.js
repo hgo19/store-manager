@@ -21,4 +21,12 @@ const insert = async (productsArray) => {
   return { affectedRows, insertId };
 };
 
-module.exports = { insert };
+const findSales = async (id) => {
+  const [result] = await connection.execute(`
+    SELECT * FROM sales_products
+      WHERE sale_id = ?`, [id]);
+
+  return result;
+};
+
+module.exports = { insert, findSales };
