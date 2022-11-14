@@ -23,10 +23,16 @@ const productCreated = {
   "name": "ProdutoX"
 };
 
+const productToUpdate = {
+  id: 1,
+  name: 'Martelo do Chapolin'
+};
+
 module.exports = {
   allProducts,
   productFound,
   error,
   productToCreate,
   productCreated,
+  productToUpdate,
 };

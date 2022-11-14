@@ -3,7 +3,11 @@ const Sinon = require('sinon');
 const connection = require('../../../src/models/connection')
 const { productsModel } = require('../../../src/models');
 
-const { allProducts, productFound, productToCreate } = require('../mocks/products.mock');
+const {
+  allProducts,
+  productFound,
+  productToCreate,
+  productToUpdate } = require('../mocks/products.mock');
 
 describe('Testa a unidade do model de products', function () {
   afterEach(Sinon.restore);
@@ -33,5 +37,17 @@ describe('Testa a unidade do model de products', function () {
 
     expect(response).to.be.a('number');
     expect(response).to.be.equal(insertId);
+  });
+
+  it('Atualiza um produto', async function () {
+    const affectedRows = 1;
+
+    Sinon.stub(connection, 'execute').resolves([{ affectedRows }]);
+
+    const response = await productsModel.update(productToUpdate);
+
+    expect(response).to.be.a('number');
+    expect(response).to.be.equal(1);
+
   });
 });
