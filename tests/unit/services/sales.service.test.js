@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const Sinon = require('sinon');
-const { salesModel } = require('../../../src/models');
+const { salesModel, productsModel } = require('../../../src/models');
 const { salesService } = require('../../../src/services');
 
 const {
@@ -15,6 +15,7 @@ const {
 describe('Testa o módulo de sales service', function () {
   afterEach(Sinon.restore);
   it('Verifica se retorna as vendas cadastradas', async function () {
+    Sinon.stub(productsModel, 'findById').resolves(findProducts)
     Sinon.stub(salesService, 'doesProductExist').resolves(findProducts);
     Sinon.stub(salesModel, 'insert').resolves({ affectedRows: 2, insertId: 3 });
 

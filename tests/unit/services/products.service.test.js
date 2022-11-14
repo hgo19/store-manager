@@ -59,6 +59,12 @@ describe('Verifica o service de products', function () {
   });
 
   it('Verifica o retorno ao dar update em um produto em caso de sucesso.', async function () {
+    const affectedRows = 1;
+
+    Sinon.stub(productsModel, 'findById')
+      .onCall(0).resolves(productFound)
+      .onCall(1).resolves(productToUpdate);
+    Sinon.stub(productsModel, 'update').resolves(affectedRows);
 
     const response = await productsService.updateProduct(productToUpdate);
 
