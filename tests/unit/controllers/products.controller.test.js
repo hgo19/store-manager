@@ -9,7 +9,8 @@ const {
   productFound,
   error,
   productToCreate,
-  productCreated } = require('../mocks/products.mock');
+  productCreated,
+  productUpdated } = require('../mocks/products.mock');
 
 const { expect } = chai;
 chai.use(sinonChai);
@@ -92,6 +93,50 @@ describe('Verifica o controller de products', function () {
 
     expect(res.status).to.have.been.calledOnceWith(201);
     expect(res.json).to.have.been.calledWith(productCreated);
+  });
+
+  it('Testa se retorna status 200 e atualiza um produto com sucesso.', async function () {
+    Sinon.stub(productsService, 'updateProduct').resolves({ type: '', message: productUpdated });
+
+    const res = {};
+    const req = {
+      params: {
+        id: 1,
+      },
+      body: {
+        name: 'Bola Quadrada',
+      },
+    };
+
+    res.status = Sinon.stub().returns(res);
+    res.json = Sinon.stub().returns();
+
+    await productsController.updateProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(productUpdated);
+  });
+
+  it('Testa se retorna status 404 e mensagem de erro em caso de produto nao encontrado.', async function () {
+    Sinon.stub(productsService, 'updateProduct').resolves({ type: 'not.found', message: 'Product not found' });
+
+    const res = {};
+    const req = {
+      params: {
+        id: 42,
+      },
+      body: {
+        name: 'Bola Quadrada',
+      },
+    };
+
+    res.status = Sinon.stub().returns(res);
+    res.json = Sinon.stub().returns();
+
+    await productsController.updateProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
 
 });

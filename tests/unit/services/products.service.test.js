@@ -62,8 +62,6 @@ describe('Verifica o service de products', function () {
 
     const response = await productsService.updateProduct(productToUpdate);
 
-    console.log(response);
-
     expect(response).to.be.a('object');
     expect(response.message).to.deep.equal(productToUpdate);
 
@@ -72,8 +70,6 @@ describe('Verifica o service de products', function () {
   it('Verifica o retorno ao dar update em um produto em caso de produto nao encontrado.', async function () {
 
     const response = await productsService.updateProduct({id: 32, name: "pedro bola"});
-
-    console.log(response);
 
     expect(response).to.be.a('object');
     expect(response.message).to.deep.equal('Product not found');

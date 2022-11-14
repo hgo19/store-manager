@@ -1,4 +1,5 @@
 const { productsService } = require('../services');
+const mapError = require('../utils/errorMap');
 
 const STATUS_HTTP = {
   OK: 200,
@@ -25,7 +26,6 @@ const getProductById = async (req, res) => {
 const createProduct = async (req, res) => {
   const { name } = req.body;
   const response = await productsService.createNewProduct(name);
-  console.log(response);
 
   if (response.type && response.message.includes('length')) {
     return res.status(STATUS_HTTP.UNPROCESSABLE_ENTITY).json({ message: response.message });
@@ -38,4 +38,20 @@ const createProduct = async (req, res) => {
   return res.status(STATUS_HTTP.CREATED).json(response.message);
 };
 
-module.exports = { getProducts, getProductById, createProduct };
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const { type, message } = await productsService.updateProduct({ id, name });
+
+  if (type) return res.status(mapError(type)).json({ message });
+
+  res.status(STATUS_HTTP.OK).json(message);
+};
+
+module.exports = {
+  getProducts,
+  getProductById,
+  createProduct,
+  updateProduct,
+};

@@ -28,6 +28,11 @@ const productToUpdate = {
   name: "Martelo do Chapolin",
 };
 
+const productUpdated = {
+  "id": 1,
+  "name": "Bola Quadrada"
+};
+
 module.exports = {
   allProducts,
   productFound,
@@ -35,4 +40,5 @@ module.exports = {
   productToCreate,
   productCreated,
   productToUpdate,
+  productUpdated,
 };
