@@ -48,6 +48,17 @@ describe('Testa a unidade do model de products', function () {
 
     expect(response).to.be.a('number');
     expect(response).to.be.equal(1);
+  });
+
+  it('Deleta um produto', async function () {
+    const affectedRows = 1;
+
+    Sinon.stub(connection, 'execute').resolves([{ affectedRows }]);
+
+    const response = await productsModel.deleteProduct(1);
+
+    expect(response).to.be.a('number');
+    expect(response).to.be.equal(affectedRows);
 
   });
 });
