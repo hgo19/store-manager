@@ -37,6 +37,7 @@ describe('Testa o módulo de sales service', function () {
   });
 
   describe('Testa listagem de vendas', function () {
+    afterEach(Sinon.restore);
     it('Verifica se recebe a lista de todas as vendas', async function () {
       Sinon.stub(salesModel, 'findAllSales').resolves(allSales);
 
