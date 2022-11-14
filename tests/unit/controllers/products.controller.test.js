@@ -139,4 +139,42 @@ describe('Verifica o controller de products', function () {
     expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
 
+
+  it('Testa se retorna status 204 ao deletar um produto com sucesso.', async function () {
+    Sinon.stub(productsService, 'deleteProduct').resolves({ type: '', message: 'Product Deleted' });
+
+    const res = {};
+    const req = {
+      params: {
+        id: 1,
+      },
+    };
+
+    res.sendStatus = Sinon.stub().returns(res);
+    res.json = Sinon.stub().returns();
+
+    await productsController.deleteProduct(req, res);
+
+    expect(res.sendStatus).to.have.been.calledWith(204);
+  });
+
+  it('Testa se retorna status 204 ao deletar um produto em caso de falha.', async function () {
+    Sinon.stub(productsService, 'deleteProduct').resolves({ type: 'not.found', message: 'Product not found' });
+
+    const res = {};
+    const req = {
+      params: {
+        id: 32,
+      },
+    };
+
+    res.status = Sinon.stub().returns(res);
+    res.json = Sinon.stub().returns();
+
+    await productsController.deleteProduct(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+  });
+
 });
