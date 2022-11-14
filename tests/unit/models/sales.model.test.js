@@ -5,7 +5,11 @@ const Sinon = require('sinon');
 const { salesModel } = require('../../../src/models');
 const connection = require('../../../src/models/connection');
 
-const { salesExample, insertSalesReturn, allSales } = require('../mocks/sales.mock');
+const {
+  salesExample,
+  insertSalesReturn,
+  allSales,
+  saleById } = require('../mocks/sales.mock');
 
 
 describe('Testa a unidade do model de sales', function () {
@@ -23,14 +27,25 @@ describe('Testa a unidade do model de sales', function () {
 
   });
 
-  it('Verifica se é possível listar os dados da tabela sales', async function () {
-    Sinon.stub(connection, 'execute').resolves([allSales]);
+  describe('Listagem de vendas', function () {
+    afterEach(Sinon.restore);
+    it('Verifica se é possível listar os dados da tabela sales', async function () {
+      Sinon.stub(connection, 'execute').resolves([allSales]);
 
-    const response = await salesModel.findAllSales();
+      const response = await salesModel.findAllSales();
 
-    console.log(response);
+      expect(response).to.be.a('array');
+      expect(response).to.deep.equal(allSales);
+    });
 
-    expect(response).to.be.a('array');
-    expect(response).to.deep.equal(allSales);
+    it('Verficia se é possivel listar uma venda ao passar determinado id', async function () {
+      Sinon.stub(connection, 'execute').resolves([saleById]);
+
+      const response = await salesModel.findById(1);
+
+      expect(response).to.be.a('array');
+      expect(response).to.deep.equal(saleById);
+
+    });
   });
 });

@@ -34,4 +34,17 @@ const getAll = async () => {
   return { type: '', message: response };
 };
 
-module.exports = { addNewSale, doesProductExist, getAll };
+const getById = async (id) => {
+  const response = await salesModel.findById(id);
+
+  if (response.length < 1) return { type: 'not.found', message: 'Sale not found' };
+
+  return { type: '', message: response };
+};
+
+module.exports = {
+  addNewSale,
+  doesProductExist,
+  getAll,
+  getById,
+};
