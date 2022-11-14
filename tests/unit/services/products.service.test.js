@@ -81,4 +81,37 @@ describe('Verifica o service de products', function () {
     expect(response.message).to.deep.equal('Product not found');
 
   });
+
+  it('Verifica o retorno ao deleter um produto em caso de sucesso.', async function () {
+    const idealReponse = {
+      type: '',
+      message: 'Product Deleted',
+    };
+
+    const affectedRows = 1;
+
+    Sinon.stub(productsModel, 'findById').resolves(productFound);
+    Sinon.stub(productsModel, 'deleteProduct').resolves(affectedRows);
+
+    const response = await productsService.deleteProduct(1);
+
+    expect(response).to.be.a('object');
+    expect(response).to.deep.equal(idealReponse);
+
+  });
+
+  it('Verifica o retorno ao deleter um produto em caso de falha.', async function () {
+    const idealReponse = {
+      type: 'not.found',
+      message: 'Product not found',
+    };
+
+    Sinon.stub(productsModel, 'findById').resolves([]);
+
+    const response = await productsService.deleteProduct(1);
+
+    expect(response).to.be.a('object');
+    expect(response).to.deep.equal(idealReponse);
+
+  });
 });

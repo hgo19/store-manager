@@ -40,6 +40,4 @@ const deleteProduct = async (id) => {
   return affectedRows;
 };
 
-deleteProduct(1);
-
 module.exports = { findAll, findById, insert, update, deleteProduct };
