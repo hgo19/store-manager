@@ -25,7 +25,7 @@ const productCreated = {
 
 const productToUpdate = {
   id: 1,
-  name: 'Martelo do Chapolin'
+  name: "Martelo do Chapolin",
 };
 
 module.exports = {

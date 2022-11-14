@@ -9,7 +9,8 @@ const {
   productFound,
   error,
   productToCreate,
-  productCreated } = require('../mocks/products.mock');
+  productCreated,
+  productToUpdate } = require('../mocks/products.mock');
 
 
 describe('Verifica o service de products', function () {
@@ -55,5 +56,27 @@ describe('Verifica o service de products', function () {
 
     expect(response).to.be.a('object');
     expect(response.message).to.be.deep.equal(productCreated);
+  });
+
+  it('Verifica o retorno ao dar update em um produto em caso de sucesso.', async function () {
+
+    const response = await productsService.updateProduct(productToUpdate);
+
+    console.log(response);
+
+    expect(response).to.be.a('object');
+    expect(response.message).to.deep.equal(productToUpdate);
+
+  });
+
+  it('Verifica o retorno ao dar update em um produto em caso de produto nao encontrado.', async function () {
+
+    const response = await productsService.updateProduct({id: 32, name: "pedro bola"});
+
+    console.log(response);
+
+    expect(response).to.be.a('object');
+    expect(response.message).to.deep.equal('Product not found');
+
   });
 });
