@@ -28,4 +28,10 @@ const addNewSale = async (newSale) => {
   return { type: '', message: objectToReturn };
 };
 
-module.exports = { addNewSale, doesProductExist };
+const getAll = async () => {
+  const response = await salesModel.findAllSales();
+
+  return { type: '', message: response };
+};
+
+module.exports = { addNewSale, doesProductExist, getAll };

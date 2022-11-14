@@ -24,12 +24,13 @@ const insert = async (productsArray) => {
 const findAllSales = async () => {
   const [result] = await connection.execute(`
     SELECT
-    sp.sale_id,
-    s.date,
-    sp.product_id,
-    sp.quantity
+    sp.sale_id AS saleId,
+    s.date AS date,
+    sp.product_id AS productId,
+    sp.quantity AS quantity
     FROM sales_products AS sp
-    INNER JOIN sales AS s ON sp.sale_id = s.id;`);
+    INNER JOIN sales AS s ON sp.sale_id = s.id
+    ORDER BY saleId, productId;`);
 
   return result;
 };

@@ -8,7 +8,8 @@ const {
   newSaleReturn,
   findProducts,
   wrongSaleExample,
-  productsFindUndefined} = require('../mocks/sales.mock');
+  productsFindUndefined,
+  allSales } = require('../mocks/sales.mock');
 
 describe('Testa o módulo de sales service', function () {
   afterEach(Sinon.restore);
@@ -31,5 +32,17 @@ describe('Testa o módulo de sales service', function () {
     expect(response).to.be.a('object');
     expect(response.message).to.be.equal('Product not found');
 
+  });
+
+  describe('Testa listagem de vendas', function () {
+    it('Verifica se recebe a lista de todas as vendas', async function () {
+      Sinon.stub(salesModel, 'findAllSales').resolves(allSales);
+
+      const response = await salesService.getAll();
+
+      expect(response).to.be.a('object');
+      expect(response.message).to.be.a('array');
+      expect(response.message).to.deep.equal(allSales);
+    });
   });
 });
