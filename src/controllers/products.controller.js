@@ -25,17 +25,11 @@ const getProductById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   const { name } = req.body;
-  const response = await productsService.createNewProduct(name);
+  const { message, type } = await productsService.createNewProduct(name);
 
-  if (response.type && response.message.includes('length')) {
-    return res.status(STATUS_HTTP.UNPROCESSABLE_ENTITY).json({ message: response.message });
-  }
+  if (type) return res.status(mapError(type)).json({ message });
 
-  if (response.type && response.message.includes('required')) {
-    return res.status(STATUS_HTTP.BAD_REQUEST).json({ message: response.message });
-  }
-
-  return res.status(STATUS_HTTP.CREATED).json(response.message);
+  return res.status(STATUS_HTTP.CREATED).json(message);
 };
 
 const updateProduct = async (req, res) => {

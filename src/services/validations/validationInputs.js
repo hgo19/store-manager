@@ -8,9 +8,12 @@ const validateId = (id) => {
   return { type: null, message: '' };
 };
 
-const validateNewProduct = (name) => {
+const validateNameProduct = (name) => {
   const { error } = newProductSchema.validate({ name });
-  if (error) return { type: 'INVALID_INPUT', message: error.message };
+  if (error) {
+    const [{ type }] = error.details;
+    return { type, message: error.message };
+  }
 
   return { type: null, message: '' };
 };
@@ -27,11 +30,4 @@ const validateNewSale = (newSale) => {
   return { type: null, message: '' };
 };
 
-// const newSale = [
-//   { productId: 1, quantity: 0 },
-//   { productId: 2, quantity: 1 },
-// ];
-
-// console.log(validateNewSale(newSale));
-
-module.exports = { validateId, validateNewProduct, validateNewSale };
+module.exports = { validateId, validateNameProduct, validateNewSale };
