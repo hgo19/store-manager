@@ -9,7 +9,11 @@ chai.use(sinonChai);
 
 const { salesController } = require('../../../src/controllers');
 const { salesService } = require('../../../src/services');
-const { salesExample, newSaleReturn, allSales } = require('../mocks/sales.mock');
+const {
+  salesExample,
+  newSaleReturn,
+  allSales,
+  saleById } = require('../mocks/sales.mock');
 
 describe('Testa o modulo de sales controller', function () {
   afterEach(Sinon.restore);
@@ -64,6 +68,46 @@ describe('Testa o modulo de sales controller', function () {
 
       expect(res.status).to.have.been.calledWith(200);
       expect(res.json).to.have.been.calledWith(allSales);
+    });
+
+    it('Retorna a lista da venda pelo id solicitado em caso de sucesso.', async function () {
+      Sinon.stub(salesService, 'getById')
+        .resolves({ type: '', message: saleById });
+
+      const res = {};
+      const req = {
+        params: {
+          id: 1,
+        },
+      };
+
+      res.status = Sinon.stub().returns(res);
+      res.json = Sinon.stub().returns();
+
+      await salesController.getSaleById(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(saleById);
+    });
+
+    it('Retorna uma mensagem de erro em caso de falha ao pesquisar venda pelo id.', async function () {
+      Sinon.stub(salesService, 'getById')
+        .resolves({ type: 'not.found', message: 'Product not found' });
+
+      const res = {};
+      const req = {
+        params: {
+          id: 'bola',
+        },
+      };
+
+      res.status = Sinon.stub().returns(res);
+      res.json = Sinon.stub().returns();
+
+      await salesController.getSaleById(req, res);
+
+      expect(res.status).to.have.been.calledWith(404);
+      expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
     });
   });
 });

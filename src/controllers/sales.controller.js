@@ -21,4 +21,17 @@ const getAllSales = async (_req, res) => {
   return res.status(STATUS_HTTP.OK).json(message);
 };
 
-module.exports = { addNewSale, getAllSales };
+const getSaleById = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await salesService.getById(id);
+
+  if (type) return res.status(mapError(type)).json({ message });
+
+  return res.status(STATUS_HTTP.OK).json(message);
+};
+
+module.exports = {
+  addNewSale,
+  getAllSales,
+  getSaleById,
+};
