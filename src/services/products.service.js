@@ -50,7 +50,9 @@ const updateProduct = async ({ id, name }) => {
 const deleteProduct = async (id) => {
   const checkIfProductExist = await productsModel.findById(id);
 
-  if (!checkIfProductExist) return { type: 'not.found', message: 'Product not found' };
+  if (!checkIfProductExist || checkIfProductExist.length === 0) {
+    return { type: 'not.found', message: 'Product not found' };
+  }
 
   await productsModel.deleteProduct(id);
 
