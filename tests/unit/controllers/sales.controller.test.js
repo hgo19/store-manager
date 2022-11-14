@@ -9,7 +9,7 @@ chai.use(sinonChai);
 
 const { salesController } = require('../../../src/controllers');
 const { salesService } = require('../../../src/services');
-const { salesExample, newSaleReturn } = require('../mocks/sales.mock');
+const { salesExample, newSaleReturn, allSales } = require('../mocks/sales.mock');
 
 describe('Testa o modulo de sales controller', function () {
   afterEach(Sinon.restore);
@@ -47,5 +47,23 @@ describe('Testa o modulo de sales controller', function () {
 
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+  });
+
+  describe('Listagem de vendas', function () {
+    it('Retorna a lista de todas as vendas', async function () {
+      Sinon.stub(salesService, 'getAll')
+        .resolves({ type: '', message: allSales });
+
+      const res = {};
+      const req = {};
+
+      res.status = Sinon.stub().returns(res);
+      res.json = Sinon.stub().returns();
+
+      await salesController.getAllSales(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(allSales);
+    });
   });
 });

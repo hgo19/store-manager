@@ -2,6 +2,7 @@ const { salesService } = require('../services');
 const mapError = require('../utils/errorMap');
 
 const STATUS_HTTP = {
+  OK: 200,
   CREATED: 201,
 };
 
@@ -14,4 +15,10 @@ const addNewSale = async (req, res) => {
   return res.status(STATUS_HTTP.CREATED).json(message);
 };
 
-module.exports = { addNewSale };
+const getAllSales = async (_req, res) => {
+  const { message } = await salesService.getAll();
+
+  return res.status(STATUS_HTTP.OK).json(message);
+};
+
+module.exports = { addNewSale, getAllSales };
