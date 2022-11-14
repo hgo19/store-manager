@@ -21,12 +21,17 @@ const insert = async (productsArray) => {
   return { affectedRows, insertId };
 };
 
-const findSales = async (id) => {
+const findAllSales = async () => {
   const [result] = await connection.execute(`
-    SELECT * FROM sales_products
-      WHERE sale_id = ?`, [id]);
+    SELECT
+    sp.sale_id,
+    s.date,
+    sp.product_id,
+    sp.quantity
+    FROM sales_products AS sp
+    INNER JOIN sales AS s ON sp.sale_id = s.id;`);
 
   return result;
 };
 
-module.exports = { insert, findSales };
+module.exports = { insert, findAllSales };
