@@ -26,13 +26,35 @@ describe('Testa o módulo de sales service', function () {
 
   });
 
-  it('Verifica see retorna erro em caso de inputs inválidos', async function () {
+  it('Verifica se retorna erro em caso de inputs inválidos', async function () {
     Sinon.stub(salesService, 'doesProductExist').resolves(productsFindUndefined);
 
     const response = await salesService.addNewSale(wrongSaleExample);
 
     expect(response).to.be.a('object');
     expect(response.message).to.be.equal('Product not found');
+
+  });
+
+  it('Verifica se é possível deletar a venda em caso de sucesso', async function () {
+    Sinon.stub(salesModel, 'findById').resolves(saleById);
+    Sinon.stub(salesModel, 'deleteSale').resolves('DELETED SALE FROM sales AND sales_products')
+
+    const response = await salesService.deleteSale(1);
+
+    expect(response).to.be.a('object');
+    expect(response.message).to.be.equal('DELETED SALE FROM sales AND sales_products');
+
+  });
+
+  it('Verifica se retorna um erro em caso de falha ao deletar sale', async function () {
+
+    Sinon.stub(salesModel, 'findById').resolves([]);
+
+    const response = await salesService.deleteSale(1);
+
+    expect(response).to.be.a('object');
+    expect(response.message).to.be.equal('Sale not found');
 
   });
 
