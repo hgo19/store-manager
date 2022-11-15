@@ -27,6 +27,15 @@ describe('Testa a unidade do model de sales', function () {
 
   });
 
+  it('Verifica se é possível deletar uma venda', async function () {
+    Sinon.stub(connection, 'execute').resolves('DELETED SALE FROM sales AND sales_products');
+
+    const response = await salesModel.deleteSale(1);
+
+    expect(response).to.be.a('string');
+
+  });
+
   describe('Listagem de vendas', function () {
     afterEach(Sinon.restore);
     it('Verifica se é possível listar os dados da tabela sales', async function () {
