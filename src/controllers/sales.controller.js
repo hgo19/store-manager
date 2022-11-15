@@ -4,6 +4,7 @@ const mapError = require('../utils/errorMap');
 const STATUS_HTTP = {
   OK: 200,
   CREATED: 201,
+  NO_CONTENT: 204,
 };
 
 const addNewSale = async (req, res) => {
@@ -30,8 +31,18 @@ const getSaleById = async (req, res) => {
   return res.status(STATUS_HTTP.OK).json(message);
 };
 
+const deleteSale = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await salesService.deleteSale(id);
+
+  if (type) return res.status(mapError(type)).json({ message });
+
+  return res.sendStatus(STATUS_HTTP.NO_CONTENT);
+};
+
 module.exports = {
   addNewSale,
   getAllSales,
   getSaleById,
+  deleteSale,
 };
