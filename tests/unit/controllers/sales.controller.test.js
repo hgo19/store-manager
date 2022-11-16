@@ -13,7 +13,9 @@ const {
   salesExample,
   newSaleReturn,
   allSales,
-  saleById } = require('../mocks/sales.mock');
+  saleById,
+  saleUpdate,
+  updatedSale } = require('../mocks/sales.mock');
 
 describe('Testa o modulo de sales controller', function () {
   afterEach(Sinon.restore);
@@ -84,6 +86,47 @@ describe('Testa o modulo de sales controller', function () {
     res.json = Sinon.stub().returns();
 
     await salesController.deleteSale(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+  });
+
+  it('Verifica o retorno ao atualizar uma venda com sucesso', async function () {
+    Sinon.stub(salesService, 'updateSale').resolves({ type: '', message: updatedSale });
+
+    const res = {};
+    const req = {
+      params: {
+        id: 1,
+      },
+      body: saleUpdate
+    };
+
+    res.status = Sinon.stub().returns(res);
+    res.json = Sinon.stub().returns();
+
+    await salesController.updateSale(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(updatedSale);
+  });
+
+
+  it('Verifica o retorno ao atualizar uma venda com falha', async function () {
+    Sinon.stub(salesService, 'updateSale').resolves({ type: 'not.found', message: 'Sale not found' });
+
+    const res = {};
+    const req = {
+      params: {
+        id: 32,
+      },
+      body: saleUpdate
+    };
+
+    res.status = Sinon.stub().returns(res);
+    res.json = Sinon.stub().returns();
+
+    await salesController.updateSale(req, res);
 
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });

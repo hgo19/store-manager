@@ -85,6 +85,20 @@ const saleUpdate = [
   }
 ];
 
+const updatedSale = {
+  "saleId": 1,
+  "itemsUpdated": [
+    {
+      "productId": 1,
+      "quantity": 10
+    },
+    {
+      "productId": 2,
+      "quantity": 50
+    }
+  ]
+};
+
 module.exports = {
   salesExample,
   insertSalesReturn,
@@ -94,5 +108,6 @@ module.exports = {
   wrongSaleExample,
   allSales,
   saleById,
-  saleUpdate
+  saleUpdate,
+  updatedSale
 };
