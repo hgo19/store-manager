@@ -10,7 +10,8 @@ const {
   wrongSaleExample,
   productsFindUndefined,
   allSales,
-  saleById } = require('../mocks/sales.mock');
+  saleById,
+  saleUpdate} = require('../mocks/sales.mock');
 
 describe('Testa o módulo de sales service', function () {
   afterEach(Sinon.restore);
@@ -56,6 +57,49 @@ describe('Testa o módulo de sales service', function () {
     expect(response).to.be.a('object');
     expect(response.message).to.be.equal('Sale not found');
 
+  });
+
+  it('Verifica se é possível atualizar uma venda em caso de sucesso', async function () {
+    Sinon.stub()
+
+    const updatedSale = {
+      saleId: 1,
+      itemsUpdated: [
+        {
+          productId: 1,
+          quantity: 10
+        },
+        {
+          productId: 2,
+          quantity: 50
+        }
+      ]
+    }
+
+    const idealReturn = {
+      type: '',
+      message: updatedSale
+    };
+
+    const id = 1;
+
+    const response = await salesService.updateSale(id, saleUpdate);
+
+
+    expect(response).to.be.a('object');
+    expect(response.type).to.deep.equal(idealReturn.type);
+
+  });
+
+  it('Verifica se retorna erro de \'Sale not found\' em caso de venda nao encontrada ao atualizar', async function () {
+    Sinon.stub(salesModel, 'findById').resolves([]);
+
+    const id = 900;
+
+    const response = await salesService.updateSale(id, saleUpdate);
+
+    expect(response).to.be.a('object');
+    expect(response.message).to.be.equal('Sale not found');
   });
 
   describe('Testa listagem de vendas', function () {

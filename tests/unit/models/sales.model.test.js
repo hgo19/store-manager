@@ -38,11 +38,13 @@ describe('Testa a unidade do model de sales', function () {
   });
 
   it('Verifica se é possível atualizar uma venda', async function () {
+    Sinon.stub(connection, 'execute').resolves([]);
+
     const id = 1;
 
     const response = await salesModel.update(id, saleUpdate);
 
-    expect(response).to.be.a('string');
+    expect(response).to.be.a('array');
 
   });
 

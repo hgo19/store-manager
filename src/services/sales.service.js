@@ -52,10 +52,38 @@ const deleteSale = async (id) => {
   return { type: '', message: deletedSale };
 };
 
+const updateSale = async (id, saleToUpdate) => {
+  const error = validateNewSale(saleToUpdate);
+
+  if (error.type) return error;
+
+  const checkIfSaleExist = await salesModel.findById(id);
+
+  if (!checkIfSaleExist.length) return { type: 'not.found', message: 'Sale not found' };
+
+  const checkProducts = await doesProductExist(saleToUpdate);
+
+  if (checkProducts.some((product) => typeof product === 'undefined')) {
+    return { type: 'not.found', message: 'Product not found' };
+  }
+
+  const response = await salesModel.update(id, saleToUpdate);
+
+  if (response.some(([{ affectedRows }]) => affectedRows > 0)) {
+    const objectToReturn = {
+      saleId: id,
+      itemsUpdated: saleToUpdate,
+    };
+
+    return { type: '', message: objectToReturn };
+  }
+};
+
 module.exports = {
   addNewSale,
   doesProductExist,
   getAll,
   getById,
   deleteSale,
+  updateSale,
 };

@@ -67,12 +67,12 @@ const update = async (id, salesToUpdate) => {
         quantity = ?
         WHERE sale_id = ? AND product_id = ?`;
 
-  await Promise.all(
+  const result = await Promise.all(
     salesToUpdate.map(({ productId, quantity }) => connection
       .execute(QUERY, [productId, quantity, id, productId])),
   );
 
-  return 'SALES UPDATED';
+  return result;
 };
 
 module.exports = {
