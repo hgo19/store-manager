@@ -177,4 +177,46 @@ describe('Verifica o controller de products', function () {
     expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
   });
 
+  it('Testa o retorno ao pesquisar um produto pelo nome', async function () {
+    const result = { id: 1, name: 'Martelo de Thor' };
+
+    Sinon.stub(productsService, 'findByName').resolves({ type: '', message: [result] });
+
+    const res = {};
+    const req = {
+      query: {
+        q: 'mart'
+      }
+    };
+
+    res.status = Sinon.stub().returns(res);
+    res.json = Sinon.stub().returns();
+
+
+    await productsController.getProductByName(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledOnceWith([result]);
+  });
+
+  it('Testa o retorno ao esquecer  de usar um nome para pesquisar no endereço \'/products/search?q=\' ', async function () {
+    Sinon.stub(productsService, 'findByName').resolves({ type: '', message: allProducts });
+
+    const res = {};
+    const req = {
+      query: {
+        q: '',
+      }
+    };
+
+    res.status = Sinon.stub().returns(res);
+    res.json = Sinon.stub().returns();
+
+
+    await productsController.getProductByName(req, res);
+
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledOnceWith(allProducts);
+  });
+
 });

@@ -60,15 +60,15 @@ const deleteProduct = async (id) => {
 };
 
 const findByName = async (name) => {
-  if (name) {
-    const findProducts = await productsModel.findByName(name);
+  if (!name) {
+    const allProducts = await productsModel.findAll();
 
-    return { type: '', message: findProducts };
+    return { type: '', message: allProducts };
   }
 
-  const allProducts = await productsModel.findAll();
+  const findProducts = await productsModel.findByName(name);
 
-  return { type: '', message: allProducts };
+  return { type: '', message: findProducts };
 };
 
 module.exports = {
