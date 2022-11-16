@@ -180,7 +180,7 @@ describe('Verifica o controller de products', function () {
   it('Testa o retorno ao pesquisar um produto pelo nome', async function () {
     const result = { id: 1, name: 'Martelo de Thor' };
 
-    Sinon.stub(productsService, 'findByName').resolves({ type: '', message: [result] });
+    // Sinon.stub(productsService, 'findByName').resolves({ type: '', message: [result] });
 
     const res = {};
     const req = {
