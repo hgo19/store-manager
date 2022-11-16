@@ -114,4 +114,24 @@ describe('Verifica o service de products', function () {
     expect(response).to.deep.equal(idealReponse);
 
   });
+
+  it('Verifica o retorno em caso de sucesso ao pesquisar um produto pelo nome', async function () {
+    const result = { id: 1, name: 'Martelo de Thor' };
+    Sinon.stub(productsModel, 'findByName').resolves(result)
+
+    const name = 'mart';
+
+    const response = await productsService.findByName(name);
+
+    expect(response).to.be.a('object');
+    expect(response.message).to.deep.equal(result);
+  });
+
+  it('Verifica o retorno em caso de não passar o nome ao pesquisar', async function () {
+    Sinon.stub(productsModel, 'findAll').resolves(allProducts);
+    const response = await productsService.findByName();
+
+    expect(response).to.be.a('object');
+    expect(response.message).to.deep.equal(allProducts);
+  });
 });
