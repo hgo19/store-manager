@@ -44,8 +44,6 @@ const updateSale = async (req, res) => {
   const { id } = req.params;
   const saleToUpdate = req.body;
 
-  console.log('LOG SALES', saleToUpdate);
-
   const { type, message } = await salesService.updateSale(id, saleToUpdate);
 
   if (type) return res.status(mapError(type)).json({ message });

@@ -61,4 +61,15 @@ describe('Testa a unidade do model de products', function () {
     expect(response).to.be.equal(affectedRows);
 
   });
+
+  it('Pesquisa um produto pelo nome', async function () {
+    const result = { id: 1, name: 'Martelo de Thor' };
+    Sinon.stub(connection, 'execute').resolves([result]);
+
+    const name = 'mart';
+
+    const response = await productsModel.findByName(name);
+    expect(response).to.be.a('object');
+    expect(response).to.deep.equal(result);
+  });
 });
