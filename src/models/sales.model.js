@@ -61,9 +61,24 @@ const deleteSale = async (id) => {
   return 'DELETED SALE FROM sales AND sales_products';
 };
 
+const update = async (id, salesToUpdate) => {
+  const QUERY = `UPDATE sales_products
+    SET product_id = ?,
+        quantity = ?
+        WHERE sale_id = ? AND product_id = ?`;
+
+  await Promise.all(
+    salesToUpdate.map(({ productId, quantity }) => connection
+      .execute(QUERY, [productId, quantity, id, productId])),
+  );
+
+  return 'SALES UPDATED';
+};
+
 module.exports = {
   insert,
   findAllSales,
   findById,
   deleteSale,
+  update,
 };

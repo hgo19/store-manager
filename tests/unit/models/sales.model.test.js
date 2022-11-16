@@ -9,7 +9,8 @@ const {
   salesExample,
   insertSalesReturn,
   allSales,
-  saleById } = require('../mocks/sales.mock');
+  saleById,
+  saleUpdate  } = require('../mocks/sales.mock');
 
 
 describe('Testa a unidade do model de sales', function () {
@@ -31,6 +32,15 @@ describe('Testa a unidade do model de sales', function () {
     Sinon.stub(connection, 'execute').resolves('DELETED SALE FROM sales AND sales_products');
 
     const response = await salesModel.deleteSale(1);
+
+    expect(response).to.be.a('string');
+
+  });
+
+  it('Verifica se é possível atualizar uma venda', async function () {
+    const id = 1;
+
+    const response = await salesModel.update(id, saleUpdate);
 
     expect(response).to.be.a('string');
 

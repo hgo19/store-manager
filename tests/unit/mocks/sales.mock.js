@@ -74,6 +74,17 @@ const saleById = [
   },
 ];
 
+const saleUpdate = [
+  {
+    "productId": 1,
+    "quantity": 10
+  },
+  {
+    "productId": 2,
+    "quantity": 50
+  }
+];
+
 module.exports = {
   salesExample,
   insertSalesReturn,
@@ -82,5 +93,6 @@ module.exports = {
   productsFindUndefined,
   wrongSaleExample,
   allSales,
-  saleById
+  saleById,
+  saleUpdate
 };
