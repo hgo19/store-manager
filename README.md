@@ -51,10 +51,16 @@ docker-compose up -d
 ```bash
 docker exec -it store_manager bash
 ```
-
-3.1 Dentro do container:
+Dentro do Container:
 ```bash
 npm install
+```
+```bash
+npm run migration
+```
+
+```bash
+npm run seed
 ```
 
 4.  A aplicação estará rodando na porta 3000, para acessála basta acessar o endereço: http://localhost:3000 e então utilizar os endpoints.
