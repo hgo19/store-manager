@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  
+  node:
+    
+    image: node:16.14
+    
+    container_name: store_manager
+    
+    tty: true
+    
+    stdin_open: true
+    
+    command: bash 
+    
+    restart: always
+    
+    working_dir: /home/node/app
+    
+    volumes:
+      - ./:/home/node/app
+    
+    depends_on:
+      - db
+    
+    
+    ports:
+      - 3000:3000
+      - 9229:9229
+
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: db 
+      PORT: '3000'
+      HOST: store_manager
+    networks:
+      - store_manager_net
+
+  db:
+    container_name: store_manager_db
+    image: mysql:8.0.23
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - 3306:3306
+    networks:
+      - store_manager_net
+
+networks:
+  store_manager_net:
+    driver: bridge
