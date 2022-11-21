@@ -22,7 +22,7 @@ describe('Verifica o service de products', function () {
     const response = await productsService.getAllProducts();
 
     expect(response).to.be.a('object');
-    expect(response.message).to.be.a('array');
+    expect(response.message).to.be.an('array');
 
     expect(response.message).to.deep.equal(allProducts);
   });
@@ -32,7 +32,7 @@ describe('Verifica o service de products', function () {
 
     const response = await productsService.getById(50);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.be.a('null');
     expect(response.type).to.deep.equal(error.message);
   });
@@ -42,7 +42,7 @@ describe('Verifica o service de products', function () {
 
     const response = await productsService.getById(1);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.deep.equal(productFound);
   });
 
@@ -54,7 +54,7 @@ describe('Verifica o service de products', function () {
 
     const response = await productsService.createNewProduct(productToCreate);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.be.deep.equal(productCreated);
   });
 
@@ -68,7 +68,7 @@ describe('Verifica o service de products', function () {
 
     const response = await productsService.updateProduct(productToUpdate);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.deep.equal(productToUpdate);
 
   });
@@ -77,7 +77,7 @@ describe('Verifica o service de products', function () {
 
     const response = await productsService.updateProduct({id: 32, name: "pedro bola"});
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.deep.equal('Product not found');
 
   });
@@ -95,7 +95,7 @@ describe('Verifica o service de products', function () {
 
     const response = await productsService.deleteProduct(1);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response).to.deep.equal(idealReponse);
 
   });
@@ -110,7 +110,7 @@ describe('Verifica o service de products', function () {
 
     const response = await productsService.deleteProduct(1);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response).to.deep.equal(idealReponse);
 
   });
@@ -123,7 +123,7 @@ describe('Verifica o service de products', function () {
 
     const response = await productsService.findByName(name);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.deep.equal(result);
   });
 
@@ -131,7 +131,7 @@ describe('Verifica o service de products', function () {
     Sinon.stub(productsModel, 'findAll').resolves(allProducts);
     const response = await productsService.findByName();
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.deep.equal(allProducts);
   });
 });

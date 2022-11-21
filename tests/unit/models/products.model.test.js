@@ -17,7 +17,7 @@ describe('Testa a unidade do model de products', function () {
 
     const response = await productsModel.findAll();
 
-    expect(response).to.be.a('Array');
+    expect(response).to.be.an('array');
     expect(response).to.deep.equal(allProducts);
   });
 
@@ -26,7 +26,7 @@ describe('Testa a unidade do model de products', function () {
 
     const response = await productsModel.findById(1);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response).to.deep.equal(productFound);
   });
 
@@ -69,7 +69,7 @@ describe('Testa a unidade do model de products', function () {
     const name = 'mart';
 
     const response = await productsModel.findByName(name);
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response).to.deep.equal(result);
   });
 });

@@ -22,7 +22,7 @@ describe('Testa o módulo de sales service', function () {
 
     const response = await salesService.addNewSale(salesExample);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.deep.equal(newSaleReturn);
 
   });
@@ -32,7 +32,7 @@ describe('Testa o módulo de sales service', function () {
 
     const response = await salesService.addNewSale(wrongSaleExample);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.be.equal('Product not found');
 
   });
@@ -43,7 +43,7 @@ describe('Testa o módulo de sales service', function () {
 
     const response = await salesService.deleteSale(1);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.be.equal('DELETED SALE FROM sales AND sales_products');
 
   });
@@ -54,7 +54,7 @@ describe('Testa o módulo de sales service', function () {
 
     const response = await salesService.deleteSale(1);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.be.equal('Sale not found');
 
   });
@@ -86,7 +86,7 @@ describe('Testa o módulo de sales service', function () {
     const response = await salesService.updateSale(id, saleUpdate);
 
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.type).to.deep.equal(idealReturn.type);
 
   });
@@ -98,7 +98,7 @@ describe('Testa o módulo de sales service', function () {
 
     const response = await salesService.updateSale(id, saleUpdate);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.message).to.be.equal('Sale not found');
   });
 
@@ -109,8 +109,8 @@ describe('Testa o módulo de sales service', function () {
 
       const response = await salesService.getAll();
 
-      expect(response).to.be.a('object');
-      expect(response.message).to.be.a('array');
+      expect(response).to.be.an('object');
+      expect(response.message).to.be.an('array');
       expect(response.message).to.deep.equal(allSales);
     });
 
@@ -119,7 +119,7 @@ describe('Testa o módulo de sales service', function () {
 
       const response = await salesService.getById(1);
 
-      expect(response).to.be.a('object');
+      expect(response).to.be.an('object');
       expect(response.message).to.deep.equal(saleById)
     });
 
@@ -128,7 +128,7 @@ describe('Testa o módulo de sales service', function () {
 
       const response = await salesService.getById('bola');
 
-      expect(response).to.be.a('object');
+      expect(response).to.be.an('object');
       expect(response.message).to.be.equal('Sale not found')
     });
   });

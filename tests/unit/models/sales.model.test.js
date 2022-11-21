@@ -22,7 +22,7 @@ describe('Testa a unidade do model de sales', function () {
 
     const response = await salesModel.insert(salesExample);
 
-    expect(response).to.be.a('object');
+    expect(response).to.be.an('object');
     expect(response.affectedRows).to.be.equal(affectedRows);
     expect(response.insertId).to.be.equal(insertId);
 
@@ -44,7 +44,7 @@ describe('Testa a unidade do model de sales', function () {
 
     const response = await salesModel.update(id, saleUpdate);
 
-    expect(response).to.be.a('array');
+    expect(response).to.be.an('array');
 
   });
 
@@ -55,7 +55,7 @@ describe('Testa a unidade do model de sales', function () {
 
       const response = await salesModel.findAllSales();
 
-      expect(response).to.be.a('array');
+      expect(response).to.be.an('array');
       expect(response).to.deep.equal(allSales);
     });
 
@@ -64,7 +64,7 @@ describe('Testa a unidade do model de sales', function () {
 
       const response = await salesModel.findById(1);
 
-      expect(response).to.be.a('array');
+      expect(response).to.be.an('array');
       expect(response).to.deep.equal(saleById);
 
     });
